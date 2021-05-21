@@ -11,7 +11,6 @@ import (
 	"strings"
 
 	cmds "github.com/ipfs/go-ipfs-cmds"
-
 	files "github.com/ipfs/go-ipfs-files"
 	logging "github.com/ipfs/go-log"
 )
@@ -58,6 +57,15 @@ func parseRequest(r *http.Request, root *cmds.Command) (*cmds.Request, error) {
 
 	if cmd.NoRemote {
 		return nil, ErrNotFound
+	}
+
+	perm, exists := cmd.Extra.GetValue("perm")
+	if !exists {
+		perm = "read"
+	}
+	has := HasPerm(r.Context(), perm.(string))
+	if !has {
+		return nil, ErrWithoutPermission
 	}
 
 	opts := make(map[string]interface{})

@@ -12,6 +12,8 @@ import (
 type Request struct {
 	Context       context.Context
 	Root, Command *Command
+	// CustomHeader will override the default values
+	CustomHeader map[string]string
 
 	Path      []string
 	Arguments []string
@@ -40,13 +42,13 @@ func NewRequest(ctx context.Context,
 	options, err := checkAndConvertOptions(root, opts, path)
 
 	req := &Request{
-		Path:      path,
-		Options:   options,
-		Arguments: args,
-		Files:     file,
-		Root:      root,
-		Command:   cmd,
-		Context:   ctx,
+		Path:         path,
+		Options:      options,
+		Arguments:    args,
+		Files:        file,
+		Root:         root,
+		Command:      cmd,
+		Context:      ctx,
 	}
 
 	return req, err

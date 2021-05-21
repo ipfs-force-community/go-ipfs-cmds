@@ -22,7 +22,7 @@ func main() {
 	req.Options["encoding"] = cmds.Text
 
 	// create http rpc client
-	client := http.NewClient(":6798")
+	client := http.NewClient(":6798","")
 
 	// create an emitter
 	re, err := cli.NewResponseEmitter(os.Stdout, os.Stderr, req)

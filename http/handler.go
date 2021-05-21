@@ -18,7 +18,8 @@ var log = logging.Logger("cmds/http")
 
 var (
 	// ErrNotFound is returned when the endpoint does not exist.
-	ErrNotFound = errors.New("404 page not found")
+	ErrNotFound          = errors.New("404 page not found")
+	ErrWithoutPermission = errors.New("401 Forbidden")
 )
 
 const (
@@ -32,10 +33,10 @@ const (
 	contentDispHeader        = "Content-Disposition"
 	transferEncodingHeader   = "Transfer-Encoding"
 	originHeader             = "origin"
-
-	applicationJSON        = "application/json"
-	applicationOctetStream = "application/octet-stream"
-	plainText              = "text/plain"
+	authorization            = "Authorization"
+	applicationJSON          = "application/json"
+	applicationOctetStream   = "application/octet-stream"
+	plainText                = "text/plain"
 )
 
 func skipAPIHeader(h string) bool {
