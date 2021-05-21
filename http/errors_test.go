@@ -117,7 +117,7 @@ func TestErrors(t *testing.T) {
 	mkTest := func(tc testcase) func(*testing.T) {
 		return func(t *testing.T) {
 			_, srv := getTestServer(t, nil, false) // handler_test:/^func getTestServer/
-			c := NewClient(srv.URL)
+			c := NewClient(srv.URL,"")
 			req, err := cmds.NewRequest(context.Background(), tc.path, tc.opts, nil, nil, cmdRoot)
 			if err != nil {
 				t.Fatal(err)

@@ -23,6 +23,7 @@ var OptionSkipMap = map[string]bool{
 }
 
 type client struct {
+	token         string
 	serverAddress string
 	httpClient    *http.Client
 	ua            string
@@ -65,12 +66,13 @@ func ClientWithFallback(exe cmds.Executor) ClientOpt {
 }
 
 // NewClient constructs a new HTTP-backed command executor.
-func NewClient(address string, opts ...ClientOpt) cmds.Executor {
+func NewClient(address, token string, opts ...ClientOpt) cmds.Executor {
 	if !strings.HasPrefix(address, "http://") {
 		address = "http://" + address
 	}
 
 	c := &client{
+		token:         token,
 		serverAddress: address,
 		httpClient:    http.DefaultClient,
 		ua:            "go-ipfs-cmds/http",
@@ -171,7 +173,14 @@ func (c *client) toHTTPRequest(req *cmds.Request) (*http.Request, error) {
 	} else {
 		httpReq.Header.Set(contentTypeHeader, applicationOctetStream)
 	}
+
 	httpReq.Header.Set(uaHeader, c.ua)
+	httpReq.Header.Set("Authorization", "Bearer "+c.token)
+	if len(req.CustomHeader) > 0 {
+		for k, v := range req.CustomHeader {
+			httpReq.Header.Set(k, v)
+		}
+	}
 
 	httpReq = httpReq.WithContext(req.Context)
 	httpReq.Close = true

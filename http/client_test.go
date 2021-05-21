@@ -42,7 +42,7 @@ func TestClientUserAgent(t *testing.T) {
 		tc.host = s.URL
 		r := &cmds.Request{Path: tc.path, Command: &cmds.Command{}, Root: &cmds.Command{}}
 
-		c := NewClient(tc.host, ClientWithUserAgent(tc.ua)).(*client)
+		c := NewClient(tc.host, "", ClientWithUserAgent(tc.ua)).(*client)
 		c.httpClient = testClient
 		c.send(r)
 
@@ -82,7 +82,7 @@ func TestClientAPIPrefix(t *testing.T) {
 		tc.host = s.URL
 		r := &cmds.Request{Path: tc.path, Command: &cmds.Command{}, Root: &cmds.Command{}}
 
-		c := NewClient(tc.host, ClientWithAPIPrefix(tc.prefix)).(*client)
+		c := NewClient(tc.host, "", ClientWithAPIPrefix(tc.prefix)).(*client)
 		c.httpClient = testClient
 		c.send(r)
 

@@ -13,7 +13,7 @@ import (
 
 var (
 	// AllowedExposedHeadersArr defines the default Access-Control-Expose-Headers.
-	AllowedExposedHeadersArr = []string{streamHeader, channelHeader, extraContentLengthHeader}
+	AllowedExposedHeadersArr = []string{streamHeader, channelHeader, extraContentLengthHeader, authorization}
 	// AllowedExposedHeaders is the list of defaults Access-Control-Expose-Headers separated by comma.
 	AllowedExposedHeaders = strings.Join(AllowedExposedHeadersArr, ", ")
 
